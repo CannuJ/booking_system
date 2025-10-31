@@ -23,7 +23,7 @@ npx prisma migrate dev --name init
 ### 3️⃣ Seed (optional)
 
 ```bash
-npx ts-node prisma/seed.ts
+npx prisma db seed
 ```
 
 ### 4️⃣ Start the server
