@@ -1,0 +1,82 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ENUMS
+
+enum DanceType {
+  SALSA
+  BACHATA
+  REGGAETON
+}
+
+enum DanceLevel {
+  NONE
+  L1
+  L2
+  L3
+}
+
+// MODELS
+
+model ClassTemplate {
+  id               Int          @id @default(autoincrement())
+  type             DanceType
+  level            DanceLevel   @default(NONE)  // NONE for reggaeton
+  defaultLength    Int          @default(60)    // in minutes
+  defaultMaxSpots  Int          @default(20)    // 20 bookings per session
+
+  // Generated sessions will point back here
+  sessions         ClassSession[]
+
+  // Useful lookups
+  @@index([type])         // e.g. show me all templates for Salsa
+  @@index([type, level])  // e.g. show me templates for Salsa 2
+
+  // Templates are unique to type, level, and length
+  @@unique([type, level, defaultLength])
+}
+
+model ClassSession {
+  id            Int           @id @default(autoincrement())
+  date          String        // YYYY-MM-DD
+  startTime     String        // "18:30"
+  length        Int           @default(60)  // allows custom lengths e.g. shorter classes on public holidays etc
+  maxSpots      Int           @default(20)  // allows custom booking limits e.g. part of studio is being renovated so smaller class
+
+  template      ClassTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  templateId    Int           // foreign link to template
+
+  // User created bookings will point back here
+  bookings      Booking[]
+
+  // Useful lookups
+  @@index([date])               // e.g. show me sessions on 2025-10-29
+  @@index([templateId, date])   // e.g. show me sessions of templateId (e.g Salsa 2 60min) for week 2025-10-27 to 2025-11-02
+
+  // A session should be unique to a template, date and start time
+  @@unique([templateId, date, startTime])
+}
+
+model Booking {
+  id             Int           @id @default(autoincrement())
+  email          String
+  createdAt      DateTime      @default(now())
+
+  session        ClassSession  @relation(fields: [classSessionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  classSessionId Int
+
+  // Useful lookups
+  @@index([email])
+  @@index([classSessionId])
+
+  // One booking per email per session
+  @@unique([classSessionId, email])
+}
