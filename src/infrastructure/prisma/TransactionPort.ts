@@ -23,9 +23,8 @@ export class PrismaTransactionPort implements TransactionPort {
 			},
 			{
 				isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
-				// Optional: avoid premature timeouts during dev
-				timeout: 15000, // ms for interactive tx
-				maxWait: 5000, // ms to wait for a tx slot/lock
+				timeout: 15000,
+				maxWait: 5000,
 			}
 		);
 	}

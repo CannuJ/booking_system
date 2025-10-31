@@ -1,10 +1,9 @@
 import Fastify from "fastify";
 import { PrismaClient } from "@prisma/client";
-import { PrismaBookingRepository } from "./infrastructure/prisma/BookingRepository";
 import { PrismaSessionRepository } from "./infrastructure/prisma/SessionRepository";
 import { PrismaTemplateRepository } from "./infrastructure/prisma/TemplateRepository";
 import { PrismaTransactionPort } from "./infrastructure/prisma/TransactionPort";
-import { BookClass } from "./application/usecases/bookClass";
+import { BookSession } from "./application/usecases/bookSession";
 import { GetTemplates } from "./application/usecases/getTemplates";
 import { GetSessions } from "./application/usecases/getSessions";
 import { bookingController } from "./interfaces/http/bookingController";
@@ -18,7 +17,7 @@ export function buildApp() {
 
 	const getTemplates = new GetTemplates(new PrismaTemplateRepository(prisma));
 	const getSessions = new GetSessions(new PrismaSessionRepository(prisma));
-	const bookClass = new BookClass(new PrismaTransactionPort(prisma));
+	const bookClass = new BookSession(new PrismaTransactionPort(prisma));
 
 	app.register(templateController(getTemplates));
 	app.register(sessionController(getSessions));

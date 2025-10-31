@@ -12,16 +12,18 @@ export const sessionController =
 		f.get<{ Querystring: { type?: string; from?: string; to?: string } }>(
 			"/sessions",
 			async (request, reply) => {
+				// provision from-to date range
 				const today = new Date();
 				today.setHours(0, 0, 0, 0);
 				const defaultFrom = yyyyMmDd(today);
 				const defaultTo = yyyyMmDd(
 					new Date(today.getFullYear(), today.getMonth(), today.getDate() + 27)
 				);
-
-				const rawType = request.query.type ?? "any";
 				const from = request.query.from ?? defaultFrom;
 				const to = request.query.to ?? defaultTo;
+
+				// validate type
+				const rawType = request.query.type ?? "any";
 
 				if (!isValidDanceType(rawType)) {
 					return reply.code(400).send({ sessions: [] });

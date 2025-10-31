@@ -26,11 +26,13 @@ export class PrismaSessionRepository implements SessionRepository {
 	): Promise<SessionWithCount[]> {
 		// convert domain type to prisma type
 		const prismaType = type ? domainToPrismaDanceType[type] : undefined;
+
 		// where clause
 		const where = {
 			date: { gte: from, lte: to },
 			...(prismaType ? { template: { type: prismaType } } : {}),
 		};
+
 		// fetch with bookings count to compute spotsRemaining
 		const dbRows = await this.prisma.session.findMany({
 			where,
@@ -52,6 +54,8 @@ export class PrismaSessionRepository implements SessionRepository {
 				},
 			},
 		});
+
+		// return formatted response
 		return dbRows.map((r) => ({
 			id: r.id,
 			date: r.date,

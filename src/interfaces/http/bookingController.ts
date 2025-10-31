@@ -1,5 +1,5 @@
 import type { FastifyPluginAsync } from "fastify";
-import { BookClass } from "../../application/usecases/bookClass";
+import { BookSession } from "../../application/usecases/bookSession";
 import {
 	ClassFullError,
 	DuplicateBookingError,
@@ -7,7 +7,7 @@ import {
 } from "../../domain/errors";
 
 export const bookingController =
-	(useCase: BookClass): FastifyPluginAsync =>
+	(useCase: BookSession): FastifyPluginAsync =>
 	async (f) => {
 		f.post<{ Params: { sessionId: string }; Body: { email: string } }>(
 			"/bookings/:sessionId",
@@ -20,9 +20,7 @@ export const bookingController =
 						.send({ success: false, error: "Invalid input" });
 				}
 				try {
-					console.log("hi");
 					const booking = await useCase.exec(sessionId, email);
-					console.log("hi6");
 					return reply.code(201).send({ success: true, booking });
 				} catch (e) {
 					if (e instanceof SessionNotFoundError)

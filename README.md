@@ -1,8 +1,22 @@
-# Dance Class Booking API
+# 💃 Dance Class Booking API (MVP)
 
-A simple **Fastify + Prisma + TypeScript** API for managing dance class sessions, templates, and bookings.
+A simple **Fastify + Prisma + TypeScript** API for managing dance class templates, sessions, and bookings.  
+This project follows **Domain-Driven Design** and a **Hexagonal (Ports & Adapters)** architecture.
 
-## ⚙️ Setup & Running Locally
+---
+
+## 🚀 Features
+
+- **Fastify** for high-performance HTTP routing
+- **Prisma ORM** for type-safe database access
+- **SQLite** persistence for local development
+- **Layered architecture** with clear separation between Domain, Application, Infrastructure, and Interfaces
+- **Transactional safety** to prevent overbooking
+- **Ready for AWS Lambda / Serverless Framework integration**
+
+---
+
+## ⚙️ Setup
 
 ### 1️⃣ Install dependencies
 
@@ -10,31 +24,34 @@ A simple **Fastify + Prisma + TypeScript** API for managing dance class sessions
 npm install
 ```
 
-### 2️⃣ Create .env & run migrations
+### 2️⃣ Setup environment
 
+Create a `.env` file:
+
+```bash
+DATABASE_URL="file:./prisma/dev.db"
+PORT=3000
 ```
-# .env for local
-DATABASE_URL = "file:dev.db"
-```
+
+### 3️⃣ Migrate database
 
 ```bash
 npx prisma migrate dev --name init
 ```
 
-### 3️⃣ Seed (optional - command above does this)
+### 4️⃣ Seed (optional)
 
 ```bash
 npx prisma db seed
 ```
 
-### 4️⃣ Start the server
+### 5️⃣ Run locally
 
 ```bash
 npm run dev
 ```
 
-Server will start at:  
-👉 **http://localhost:3000**
+Server runs at **http://localhost:3000**
 
 ---
 
@@ -92,3 +109,24 @@ curl -X POST http://localhost:3000/bookings/1   -H "Content-Type: application/js
 ```
 
 ---
+
+## 🧩 Tech Stack
+
+| Layer            | Technology                   |
+| ---------------- | ---------------------------- |
+| **Runtime**      | Node.js / Fastify            |
+| **Language**     | TypeScript                   |
+| **ORM**          | Prisma                       |
+| **Database**     | SQLite                       |
+| **Architecture** | Hexagonal (Ports & Adapters) |
+| **Validation**   | TypeScript interfaces        |
+
+---
+
+## 🧱 Future Improvements / TODOs
+
+- [ ] **Implement typed DTOs** for all API endpoints
+- [ ] **Integrate Serverless Framework (AWS Lambda)**
+- [ ] **Complete Error formats**
+- [ ] **Add Fastify JSON Schemas**
+- [ ] **Add unit tests**

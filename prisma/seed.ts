@@ -1,11 +1,7 @@
 // prisma/seed.ts
 import { PrismaClient, DanceType, DanceLevel } from "@prisma/client";
+import { yyyyMmDd } from "../src/domain/utils/date";
 const prisma = new PrismaClient();
-
-// helper functions
-const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
-const yyyyMmDd = (d: Date) =>
-	`${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 
 // class templates
 type TemplateSeed = {

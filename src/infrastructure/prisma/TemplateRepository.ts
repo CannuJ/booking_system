@@ -26,6 +26,7 @@ export class PrismaTemplateRepository implements TemplateRepository {
 			},
 		});
 
+		// return formatted response
 		return templates.map((t) => ({
 			id: t.id,
 			type: prismaToDomainDanceType[t.type],
