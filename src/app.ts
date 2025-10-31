@@ -18,11 +18,7 @@ export function buildApp() {
 
 	const getTemplates = new GetTemplates(new PrismaTemplateRepository(prisma));
 	const getSessions = new GetSessions(new PrismaSessionRepository(prisma));
-	const bookClass = new BookClass(
-		new PrismaBookingRepository(prisma),
-		new PrismaSessionRepository(prisma),
-		new PrismaTransactionPort(prisma)
-	);
+	const bookClass = new BookClass(new PrismaTransactionPort(prisma));
 
 	app.register(templateController(getTemplates));
 	app.register(sessionController(getSessions));

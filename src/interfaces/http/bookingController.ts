@@ -20,7 +20,9 @@ export const bookingController =
 						.send({ success: false, error: "Invalid input" });
 				}
 				try {
+					console.log("hi");
 					const booking = await useCase.exec(sessionId, email);
+					console.log("hi6");
 					return reply.code(201).send({ success: true, booking });
 				} catch (e) {
 					if (e instanceof SessionNotFoundError)

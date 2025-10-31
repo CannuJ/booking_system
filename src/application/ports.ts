@@ -32,5 +32,11 @@ export interface BookingRepository {
 
 // Prisma Transaction
 export interface TransactionPort {
-	runInTransaction<T>(fn: () => Promise<T>): Promise<T>;
+	withTransaction<T>(
+		fn: (deps: {
+			bookings: BookingRepository;
+			sessions: SessionRepository;
+			templates: TemplateRepository;
+		}) => Promise<T>
+	): Promise<T>;
 }

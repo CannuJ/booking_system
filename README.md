@@ -13,14 +13,10 @@ npm install
 ### 2️⃣ Run migrations
 
 ```bash
-npx prisma generate
-```
-
-```bash
 npx prisma migrate dev --name init
 ```
 
-### 3️⃣ Seed (optional)
+### 3️⃣ Seed (optional - command above does this)
 
 ```bash
 npx prisma db seed

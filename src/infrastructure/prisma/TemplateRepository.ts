@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import type { TemplateRepository } from "../../application/ports";
 import { DanceType, type Template } from "../../domain/entities";
 import {
@@ -7,8 +7,10 @@ import {
 	domainToPrismaDanceType,
 } from "../mappers/danceMapper";
 
+type DB = PrismaClient | Prisma.TransactionClient;
+
 export class PrismaTemplateRepository implements TemplateRepository {
-	constructor(private prisma: PrismaClient) {}
+	constructor(private prisma: DB) {}
 	async findByType(type?: DanceType): Promise<Template[]> {
 		// convert domain type to prisma type
 		const prismaType = type ? domainToPrismaDanceType[type] : undefined;

@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { DanceType, type SessionWithCount } from "../../domain/entities";
 import type { SessionRepository } from "../../application/ports";
 
@@ -8,8 +8,10 @@ import {
 	domainToPrismaDanceType,
 } from "../mappers/danceMapper";
 
+type DB = PrismaClient | Prisma.TransactionClient;
+
 export class PrismaSessionRepository implements SessionRepository {
-	constructor(private prisma: PrismaClient) {}
+	constructor(private prisma: DB) {}
 	async getMaxSpots(sessionId: number) {
 		const s = await this.prisma.session.findUnique({
 			where: { id: sessionId },
