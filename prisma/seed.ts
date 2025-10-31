@@ -96,7 +96,7 @@ async function main() {
 	// 1) Upsert templates
 
 	for (const t of classTemplates) {
-		const tpl = await prisma.classTemplate.upsert({
+		const tpl = await prisma.template.upsert({
 			where: {
 				type_level_defaultLength: {
 					type: t.type,
@@ -144,7 +144,7 @@ async function main() {
 			}
 
 			// Upsert by unique (templateId, date, startTime)
-			await prisma.classSession.upsert({
+			await prisma.session.upsert({
 				where: {
 					templateId_date_startTime: {
 						templateId: tpl.id,

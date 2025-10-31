@@ -2,7 +2,7 @@
 
 A simple **Fastify + Prisma + TypeScript** API for managing dance class sessions, templates, and bookings.
 
-## ⚙️ Setup
+## ⚙️ Setup & Running Locally
 
 ### 1️⃣ Install dependencies
 
@@ -11,6 +11,10 @@ npm install
 ```
 
 ### 2️⃣ Run migrations
+
+```bash
+npx prisma generate
+```
 
 ```bash
 npx prisma migrate dev --name init
@@ -35,7 +39,7 @@ Server will start at:
 
 ## 🧭 API Routes
 
-### `GET /template`
+### `GET /templates`
 
 Returns available dance class templates.  
 **Query params:**
@@ -45,7 +49,7 @@ Returns available dance class templates.
 **Example:**
 
 ```bash
-curl http://localhost:3000/template?type=salsa
+curl http://localhost:3000/templates?type=salsa
 ```
 
 ---

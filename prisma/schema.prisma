@@ -26,7 +26,7 @@ enum DanceLevel {
 
 // MODELS
 
-model ClassTemplate {
+model Template {
   id               Int          @id @default(autoincrement())
   type             DanceType
   level            DanceLevel   @default(NONE)  // NONE for reggaeton
@@ -34,7 +34,7 @@ model ClassTemplate {
   defaultMaxSpots  Int          @default(20)    // 20 bookings per session
 
   // Generated sessions will point back here
-  sessions         ClassSession[]
+  sessions         Session[]
 
   // Useful lookups
   @@index([type])         // e.g. show me all templates for Salsa
@@ -44,14 +44,14 @@ model ClassTemplate {
   @@unique([type, level, defaultLength])
 }
 
-model ClassSession {
+model Session {
   id            Int           @id @default(autoincrement())
   date          String        // YYYY-MM-DD
   startTime     String        // "18:30"
-  length        Int           @default(60)  // allows custom lengths e.g. shorter classes on public holidays etc
-  maxSpots      Int           @default(20)  // allows custom booking limits e.g. part of studio is being renovated so smaller class
+  length        Int           @default(60)  // allows custom lengths e.g. shorter sessions on public holidays etc
+  maxSpots      Int           @default(20)  // allows custom booking limits e.g. part of studio is being renovated so smaller session
 
-  template      ClassTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  template      Template @relation(fields: [templateId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   templateId    Int           // foreign link to template
 
   // User created bookings will point back here
@@ -70,13 +70,13 @@ model Booking {
   email          String
   createdAt      DateTime      @default(now())
 
-  session        ClassSession  @relation(fields: [classSessionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  classSessionId Int
+  session        Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  sessionId Int
 
   // Useful lookups
   @@index([email])
-  @@index([classSessionId])
+  @@index([sessionId])
 
   // One booking per email per session
-  @@unique([classSessionId, email])
+  @@unique([sessionId, email])
 }
