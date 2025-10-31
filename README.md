@@ -29,7 +29,7 @@ npm install
 Create a `.env` file:
 
 ```bash
-DATABASE_URL="file:./prisma/dev.db"
+DATABASE_URL="file:/dev.db"
 PORT=3000
 ```
 
