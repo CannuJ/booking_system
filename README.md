@@ -10,7 +10,12 @@ A simple **Fastify + Prisma + TypeScript** API for managing dance class sessions
 npm install
 ```
 
-### 2️⃣ Run migrations
+### 2️⃣ Create .env & run migrations
+
+```
+# .env for local
+DATABASE_URL = "file:dev.db"
+```
 
 ```bash
 npx prisma migrate dev --name init
