@@ -76,10 +76,16 @@ curl http://localhost:3000/templates?type=salsa
 
 List all active sessions or details of a specific session.
 
+**Query params:**
+
+- `from` (optional) in format `YYYY-MM-DD`: `"2025-11-01"`
+- `to` (optional) in format `YYYY-MM-DD`: `"2025-12-01"`
+- `type` (optional): `"salsa" | "bachata" | "reggaeton" | "any"`
+
 **Example:**
 
 ```bash
-curl http://localhost:3000/sessions
+curl http://localhost:3000/sessions?from=2025-10-31&to=2025-11-05&type=bachata
 ```
 
 ---
